@@ -2,7 +2,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class coin : MonoBehaviour
 {
-    [Header("движение игрока")]
+    [Header("РґРІРёР¶РµРЅРёРµ РёРіСЂРѕРєР°")]
     [SerializeField][Range(1f,10f)] private float speed = 5f;
     private Rigidbody2D rb;
     
@@ -17,6 +17,6 @@ public class coin : MonoBehaviour
         rb.linearVelocity = new Vector2(h * speed, rb.linearVelocity.y);
         
     }
-
-}
+   
+    }
 
