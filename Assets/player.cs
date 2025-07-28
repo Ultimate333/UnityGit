@@ -1,12 +1,8 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class player : MonoBehaviour
 {
-    [SerializeField] private float speed = 5f;
-   
+
     
-    void Update()
-    {
-        
-    }
 }

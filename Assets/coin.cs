@@ -22,13 +22,11 @@ public class coin : MonoBehaviour
     private void FixedUpdate()
     {
         // Применение движения
-        rb.velocity = movement * speed;
+        rb.linearVelocity = movement * speed;
     }
-
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        // Проверка столкновения с врагом
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
             ReloadScene();
         }
@@ -36,7 +34,7 @@ public class coin : MonoBehaviour
 
     void ReloadScene()
     {
-        // Перезагрузка текущей сцены
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
+
