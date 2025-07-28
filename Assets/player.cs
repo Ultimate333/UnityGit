@@ -4,28 +4,41 @@ using UnityEngine.SceneManagement;
 public class player : MonoBehaviour
 {
 
-    [SerializeField] private GameObject objectToSpawn; // Префаб для спавна
-    [SerializeField] private Vector2 spawnAreaSize = new Vector2(5f, 5f); // Зона спавна
+
+    [SerializeField] private GameObject enemyPrefab;
+    [SerializeField] private Vector2 spawnArea = new Vector2(5, 5);
+    [SerializeField] private float spawnRate = 1f;
+
+    private Transform player1;
 
     void Start()
     {
-        // Спавн при старте
-        SpawnObject();
+        player1 = GameObject.FindWithTag("Player").transform;
+        InvokeRepeating("SpawnEnemy", 0f, spawnRate);
     }
 
-    public void SpawnObject()
+    void SpawnEnemy()
     {
-        // Вычисление случайной позиции в зоне
-        Vector2 randomPosition = (Vector2)transform.position +
-            new Vector2(
-                Random.Range(-spawnAreaSize.x / 2, spawnAreaSize.x / 2),
-                Random.Range(-spawnAreaSize.y / 2, spawnAreaSize.y / 2)
-            );
+        Vector2 spawnPos = (Vector2)transform.position +
+                          new Vector2(Random.Range(-spawnArea.x / 2, spawnArea.x / 2),
+                                      Random.Range(-spawnArea.y / 2, spawnArea.y / 2));
 
-        // Создание объекта
-        GameObject newObj = Instantiate(objectToSpawn, randomPosition, Quaternion.identity);
+        GameObject enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        enemy.AddComponent<EnemyController>().Initialize(player1);
+        Destroy(enemy, 5f);
+    }
+}
 
-        // Автоудаление через 5 секунд
-        Destroy(newObj, 5f);
+public class EnemyController : MonoBehaviour
+{
+    private Transform target;
+    [SerializeField] private float speed = 3f;
+
+    public void Initialize(Transform target) => this.target = target;
+
+    void FixedUpdate()
+    {
+        if (target)
+            transform.position = Vector2.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
     }
 }

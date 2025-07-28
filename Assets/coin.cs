@@ -3,6 +3,9 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Rigidbody2D))]
 public class coin : MonoBehaviour
 {
+    
+
+
     [Header("Настройки движения")]
     [SerializeField][Range(1f, 10f)] private float speed = 5f;
 
@@ -19,22 +22,6 @@ public class coin : MonoBehaviour
         movement = new Vector2(horizontal, vertical).normalized;
     }
 
-    private void FixedUpdate()
-    {
-        // Применение движения
-        rb.linearVelocity = movement * speed;
-    }
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy"))
-        {
-            ReloadScene();
-        }
-    }
-
-    void ReloadScene()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    
 }
 
